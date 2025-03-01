@@ -1,0 +1,371 @@
+#canvas-club {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.dashboard-container {
+    min-height: 100vh;
+    /* background: linear-gradient(to bottom, #7335e6, #ecf0f1); */
+    padding: 40px 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.card {
+    background: rgba(255, 252, 252, 0.616);
+    /* White with 20% opacity */
+    border-radius: 8px;
+    color: #333;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out, background 0.3s ease-in-out;
+    margin-top: 22vh;
+    padding: 20px;
+}
+
+.card:hover {
+    transform: scale(1.03);
+    background: #ffffff;
+}
+
+.task-input-title,
+.task-input-description {
+    background: #f9fafb;
+    border: 1px solid #d1d5db;
+    color: #333;
+    padding: 10px;
+    border-radius: 8px;
+    width: 100%;
+    transition: all 0.3s ease-in-out;
+}
+
+.task-input-title::placeholder,
+.task-input-description::placeholder {
+    color: #a1a1a1;
+}
+
+.task-input-title:focus,
+.task-input-description:focus {
+    background: #ffffff;
+    outline: none;
+    box-shadow: 0px 0px 5px rgba(0, 123, 255, 0.3);
+    /* Subtle blue focus shadow */
+    border-color: #007bff;
+    /* Blue border on focus */
+}
+
+.updated_description {
+    background: #ffffff;
+}
+
+.updated_description:focus {
+    background: #ffffff;
+    outline: none;
+    box-shadow: 0px 0px 5px rgba(0, 123, 255, 0.3);
+    border-color: #007bff;
+}
+
+.updated_description::placeholder {
+    color: #ddd8d8;
+}
+
+/* .btn {
+    border-radius: 8px;
+    font-weight: bold;
+    transition: all 0.3s ease-in-out;
+    text-transform: uppercase;
+} */
+
+.btn {
+    background: #007bff;
+    border: none;
+    color: white;
+    max-width: 120px;
+    font-weight: bold;
+    padding: 1vh 3vh;
+}
+
+.btn-primary:hover {
+    background: #0056b3;
+}
+
+.btn-danger {
+    background: #e63946;
+    border: none;
+    color: white;
+    max-width: 120px;
+    font-weight: bold;
+}
+
+.btn-danger:hover {
+    background: #d32f2f;
+}
+
+.btn-warning {
+    background: #ff9800;
+    border: none;
+    color: white;
+    max-width: 120px;
+    font-weight: bold;
+}
+
+.btn-warning:hover {
+    background: #f57c00;
+}
+
+h1,
+h2 {
+    color: #333;
+}
+
+.add_task {
+    font-size: 6vh;
+}
+
+.login_logo {
+    max-width: 440px;
+    height: auto;
+    width: auto;
+}
+
+.task-input-deadline,
+.task-input-reminder {
+    font-size: 0.9rem;
+    padding: 8px;
+    display: inline-block;
+    margin-right: 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+}
+
+.scheduler {
+    display: flex;
+    flex-direction: row;
+    margin-top: 8vh;
+    margin-bottom: 8vh;
+}
+
+@media (max-width: 1024px) {
+    .scheduler {
+        display: flex;
+        flex-direction: row;
+        margin-top: 4px;
+        margin-bottom: 4px;
+    }
+
+    .dashboard-container {
+        padding: 20px;
+    }
+
+    .container {
+        width: 90%;
+    }
+
+    .btn-primary {
+        width: 50%;
+    }
+
+    .task-list .card {
+        margin: 10px 0;
+    }
+
+    .logout-btn {
+        font-size: 10px;
+        padding: 2px 2px;
+        width: 65%;
+    }
+
+    .card {
+        margin-top: 13vh;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .scheduler {
+        display: flex;
+        flex-direction: row;
+        margin-top: 4px;
+        margin-bottom: 4px;
+    }
+
+    .d-flex {
+        flex-direction: column;
+    }
+
+    .task-input-title,
+    .task-input-description {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .task-list .card {
+        text-align: left;
+    }
+
+    /* .btn {
+        width: 100%;
+        margin-bottom: 10px;
+    } */
+
+    .task-list {
+        margin-top: 20px;
+    }
+
+    .card {
+        margin-top: 13vh;
+    }
+
+    .login_logo {
+        max-width: 150px;
+    }
+
+    .text-warning {
+        font-size: 2vh;
+    }
+
+    .task-input-deadline,
+    .task-input-reminder {
+        font-size: 0.6rem;
+        padding: 5px;
+        display: inline-block;
+        margin-right: 10px;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        width: 13vh;
+    }
+
+    .scheduler {
+        display: flex;
+        flex-direction: column;
+        margin-top: 4px;
+        margin-bottom: 4px;
+    }
+
+}
+
+@media (max-width: 480px) {
+    .scheduler {
+        display: flex;
+        flex-direction: column;
+        margin-top: 2vh;
+        margin-bottom: 2vh;
+    }
+
+    h1,
+    h2 {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+
+    .task-input-title,
+    .task-input-description {
+        font-size: 14px;
+    }
+
+    /* .btn {
+        font-size: 14px;
+        padding: 10px;
+    } */
+
+    .btn{
+        padding: "1vh 3vh";
+    }
+
+
+    .btn-primary {
+        width: 43%;
+    }
+
+    .task-input-title,
+    .task-input-description {
+        font-size: 16px;
+    }
+
+    .btn-warning,
+    .btn-success,
+    .btn-secondary {
+        width: 43%;
+    }
+
+    .card-body {
+        padding: 10px;
+    }
+
+    .d-flex {
+        flex-direction: row;
+
+    }
+
+    .d-flex h2 {
+        margin: 0;
+        font-size: 18px;
+    }
+
+    .logout-btn {
+        font-size: 10px;
+        padding: 2px 2px;
+        width: 65%;
+    }
+
+    .add_taskbtn {
+        font-size: 0.9rem;
+    }
+
+}
+
+@media (max-width: 320px) {
+
+    .scheduler {
+        display: flex;
+        flex-direction: column;
+        margin-top: 4px;
+        margin-bottom: 4px;
+    }
+
+    h1,
+    h2 {
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+    .task-input-title,
+    .task-input-description {
+        font-size: 14px;
+    }
+
+    .btn {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .btn-primary {
+        width: 43%;
+    }
+
+    .btn-warning {
+        width: 43%;
+    }
+
+    .btn-danger {
+        width: 43%;
+    }
+
+    .card-body {
+        padding: 8px;
+    }
+
+    .d-flex {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .task-input-title,
+    .task-input-description {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}

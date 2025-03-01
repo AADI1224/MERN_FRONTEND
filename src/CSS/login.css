@@ -1,0 +1,79 @@
+/* Full Page Background */
+.login-container {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    overflow: hidden;
+}
+
+/* Blurred Background Image */
+.login-container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('../background_img.jpg') no-repeat center center/cover;
+    filter: blur(10px);
+    transform: scale(1.1);
+    z-index: -1;
+}
+
+/* Glassmorphism Login Card (Popping Effect) */
+.login-card {
+    background: rgba(255, 255, 255, 0.3);
+    /* Transparent background */
+    border-radius: 15px;
+    padding: 2rem;
+    width: 100%;
+    max-width: 400px;
+    transition: transform 0.3s ease-in-out;
+    position: relative;
+    z-index: 1;
+}
+
+.login-card:hover {
+    transform: scale(1.02);
+}
+
+/* Input Fields - Clear & Pop Out */
+.form-control {
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    color: black;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    background: rgba(255, 255, 255, 0.6);
+    border-color: #ffcc00;
+    color: black;
+    box-shadow: 0px 0px 12px rgba(255, 204, 0, 0.8);
+}
+
+.btn-primary {
+    background: #ffcc00;
+    border: none;
+    font-weight: bold;
+    transition: all 0.3s;
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    color: black;
+}
+
+.btn-primary:hover {
+    background: #e6b800;
+    transform: scale(1.05);
+}
+
+@media (max-width: 500px) {
+    .login-card {
+        padding: 1.5rem;
+    }
+}
