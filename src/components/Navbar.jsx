@@ -78,7 +78,12 @@ const Navbar = () => {
         <>
             <div className="navbar navbar-fixed d-flex" style={navbarStyle}>
                 {/* Left Side: Logo (Optional) */}
-                <div className="left_div d-flex align-items-center justify-content-center"> </div>
+                <div className="left_div d-flex align-items-center justify-content-center"></div>
+
+                
+                <div className="left_div d-flex align-items-center justify-content-center">
+                <p>क्या  रे  भीखमँगिया</p>
+                </div>
 
                 {/* Right Side: User Icon */}
                 <div ref={logoutRef} className={`user_icon d-flex flex-column align-items-center ${showLogout ? "show-logout" : ""}`}>
@@ -92,7 +97,7 @@ const Navbar = () => {
                     />
 
                     <h1 className="username-text d-flex" onClick={handleLogoClick} style={{ cursor: "pointer" }}>
-                        भीखमँगिया {firstname}
+                        {firstname}
                     </h1>
 
                     {showLogout && (
