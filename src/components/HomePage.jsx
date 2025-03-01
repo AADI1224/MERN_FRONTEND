@@ -83,6 +83,7 @@ const HomePage = () => {
             </motion.div>
           ))}
         </div> */}
+        <p>आप चूतिया बन गए है</p>
       </section>
 
       {/* Footer */}
