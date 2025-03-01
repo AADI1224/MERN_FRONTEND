@@ -92,7 +92,7 @@ const Navbar = () => {
                     />
 
                     <h1 className="username-text d-flex" onClick={handleLogoClick} style={{ cursor: "pointer" }}>
-                        {firstname}
+                        भीखमँगिया {firstname}
                     </h1>
 
                     {showLogout && (
