@@ -11,6 +11,7 @@
     "dotenv": "^16.4.7",
     "framer-motion": "^12.4.7",
     "lottie-web": "^5.12.2",
+    "moment-timezone": "^0.5.47",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-lottie": "^1.2.10",

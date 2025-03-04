@@ -206,11 +206,6 @@ h2 {
         text-align: left;
     }
 
-    /* .btn {
-        width: 100%;
-        margin-bottom: 10px;
-    } */
-
     .task-list {
         margin-top: 20px;
     }
@@ -270,10 +265,6 @@ h2 {
         font-size: 14px;
         padding: 10px;
     } */
-
-    .btn{
-        padding: "1vh 3vh";
-    }
 
 
     .btn-primary {

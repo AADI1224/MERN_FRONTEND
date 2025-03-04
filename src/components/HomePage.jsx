@@ -56,7 +56,7 @@ const HomePage = () => {
       {/* Features Section */}
       <section className="features">
         <h2 className="features-title">Why Choose कार्यसेतु ?</h2>
-        {/* <div className="features-grid">
+        <div className="features-grid">
           {[
             {
               title: "📅 Task Management",
@@ -82,8 +82,7 @@ const HomePage = () => {
               <p className="feature-description">{feature.description}</p>
             </motion.div>
           ))}
-        </div> */}
-        <p>आपको चूतिया बनाया गया है</p>
+        </div>
       </section>
 
       {/* Footer */}

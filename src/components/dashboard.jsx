@@ -5,6 +5,7 @@ import "../CSS/dashboard.css";
 import Navbar from "./Navbar";
 import logo from '../../src/logo2-transparent-png.png';
 import { useNavigate } from "react-router-dom";
+import moment from "moment-timezone";
 
 const Dashboard = () => {
     const [tasks, setTasks] = useState([]);
@@ -173,6 +174,7 @@ const Dashboard = () => {
                 {
                     headers: { Authorization: `Bearer ${token}` }
                 });
+            console.log("posted data", response.data);
             setTasks([response.data, ...tasks]);
             setNewTask({ title: "", description: "", deadline: "", reminderTime: "" });
         } catch (error) {
@@ -316,10 +318,14 @@ const Dashboard = () => {
                                                 <div>
                                                     <h5 style={{ color: "red" }}>{task.title}</h5>
                                                     <p>{task.description}</p>
-                                                    <p><strong>Created:</strong> {formatDate(task.createdAt)}</p>
-                                                    <p><strong>Updated:</strong> {formatDate(task.updatedAt)}</p>
-                                                    <p><strong>Deadline:</strong> {formatDate(task.deadline)}</p>
-                                                    <p><strong>Reminder Time:</strong> {formatDate(task.reminderTime)}</p>
+                                                    {/* <p><strong>Created:</strong> {formatDate(task.createdAt)}</p> */}
+                                                    <p><strong>Created:</strong> {moment(task.createdAt).format("DD/MM/YYYY, hh:mm A")}</p>
+                                                    {/* <p><strong>Updated:</strong> {formatDate(task.updatedAt)}</p> */}
+                                                    <p><strong>Updated:</strong> {moment(task.updatedAt).format("DD/MM/YYYY, hh:mm A")}</p>
+                                                    {/* <p><strong>Deadline:</strong> {formatDate(task.deadline)}</p> */}
+                                                    <p><strong>Deadline:</strong> {moment(task.deadline).format("DD/MM/YYYY, hh:mm A")}</p>
+                                                    {/* <p><strong>Reminder Time:</strong> {formatDate(task.reminderTime)}</p> */}
+                                                    <p><strong>Reminder Time:</strong> {moment(task.reminderTime).format("DD/MM/YYYY, hh:mm A")}</p>
                                                     <div className="button-group">
                                                         <button onClick={() => startEditing(task)} className="btn btn-warning me-2">Edit</button>
                                                         <button onClick={() => deleteTask(task._id)} className="btn btn-danger">Delete</button>
