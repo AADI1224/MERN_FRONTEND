@@ -9,9 +9,9 @@ import moment from "moment-timezone";
 
 const Dashboard = () => {
     const [tasks, setTasks] = useState([]);
-    const [newTask, setNewTask] = useState({ title: "", description: "" });
+    const [newTask, setNewTask] = useState({ title: "", description: "", isCompleted: false, deadline: "", reminderTime: "" });
     const [editingTaskId, setEditingTaskId] = useState(null);
-    const [editedTask, setEditedTask] = useState({ title: "", description: "" });
+    const [editedTask, setEditedTask] = useState({ title: "", description: "", isCompleted: false, });
     const [page, setPage] = useState(1);
     const limit = 5;
     const [totalPages, setTotalPages] = useState(1);
@@ -135,14 +135,13 @@ const Dashboard = () => {
                 return;
             }
             const response = await axios.get(`http://localhost:5500/tasks/gettasks?page=${page}&limit=${limit}`,
-            // const response = await axios.get(`https://mern-backend-acet.onrender.com/tasks/gettasks?page=${page}&limit=${limit}`,
+                // const response = await axios.get(`https://mern-backend-acet.onrender.com/tasks/gettasks?page=${page}&limit=${limit}`,
                 {
                     headers: { Authorization: `Bearer ${token}` }
                 });
+            console.log("tasks:", response.data);
             setTasks(response.data.tasks);
             setTotalPages(response.data.totalPages);
-
-            console.log("Fetched tasks:", response.data.tasks);
         }
         catch (error) {
             console.error("Error fetching tasks:", error.response?.data || error);
@@ -150,6 +149,9 @@ const Dashboard = () => {
             setLoading(false);
         }
     };
+
+    console.log("Tasks State", tasks);
+
     useEffect(() => {
         fetchTasks();
         // }, [page, token, navigate]);
@@ -170,7 +172,8 @@ const Dashboard = () => {
                     title: newTask.title.trim(),
                     description: newTask.description.trim(),
                     deadline: newTask.deadline,
-                    reminderTime: newTask.reminderTime
+                    reminderTime: newTask.reminderTime,
+                    isCompleted: newTask.isCompleted,
                 },
                 {
                     headers: { Authorization: `Bearer ${token}` }
@@ -186,8 +189,8 @@ const Dashboard = () => {
 
     const deleteTask = async (taskId) => {
         try {
-            // await axios.delete(`http://localhost:5500/tasks/deletetasks/${taskId}`, {
-            await axios.delete(`https://mern-backend-acet.onrender.com/tasks/deletetasks/${taskId}`, {
+            await axios.delete(`http://localhost:5500/tasks/deletetasks/${taskId}`, {
+                // await axios.delete(`https://mern-backend-acet.onrender.com/tasks/deletetasks/${taskId}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setTasks(tasks.filter((task) => task._id !== taskId));
@@ -198,12 +201,12 @@ const Dashboard = () => {
 
     const startEditing = (task) => {
         setEditingTaskId(task._id);
-        setEditedTask({ title: task.title, description: task.description, reminderTime: task.reminderTime, deadline: task.deadline });
+        setEditedTask({ title: task.title, description: task.description, reminderTime: task.reminderTime, deadline: task.deadline, isCompleted: task.isCompleted });
     };
 
     const cancelEditing = () => {
         setEditingTaskId(null);
-        setEditedTask({ title: "", description: "", deadline: "", reminderTime: "" });
+        setEditedTask({ title: "", description: "", deadline: "", reminderTime: "", });
     };
 
     const saveTaskUpdate = async (taskId) => {
@@ -215,13 +218,14 @@ const Dashboard = () => {
                     title: editedTask.title.trim(),
                     description: editedTask.description.trim(),
                     deadline: editedTask.deadline,
-                    reminderTime: editedTask.reminderTime
+                    reminderTime: editedTask.reminderTime,
+                    isCompleted: editedTask.isCompleted
                 },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
             setTasks(tasks.map((task) => (task._id === taskId ? { ...task, ...response.data } : task)));
             setEditingTaskId(null);
-            setEditedTask({ title: "", description: "", deadline: "", reminderTime: "" });
+            setEditedTask({ title: "", description: "", deadline: "", reminderTime: "", isCompleted: Boolean(" ")});
             console.log("Updated task:", editedTask);
         } catch (error) {
             console.error("Error updating task:", error.response?.data || error);
@@ -276,6 +280,13 @@ const Dashboard = () => {
                                 </div>
                             </div>
 
+                            <div className="check_box">
+                                <input className="check_box-input" type="checkbox" checked={newTask.isCompleted} onChange={(e) => setNewTask({ ...newTask, isCompleted: e.target.checked })} id="flexCheckDefault" />
+                                <label className="check_box-label" htmlFor="flexCheckDefault">
+                                    isCompleted?
+                                </label>
+                            </div>
+
                             <div className="d-flex justify-content-center align-items-center">
                                 <button className="add_taskbtn btn-primary" onClick={addTask}>Add Task</button>
                             </div>
@@ -321,12 +332,19 @@ const Dashboard = () => {
                                                         </div>
                                                     </div>
 
+                                                    <div className="check_box">
+                                                        <input className="check_box-input" type="checkbox" checked={editedTask.isCompleted} onChange={(e) => setEditedTask({ ...editedTask, isCompleted: e.target.checked })} id="flexCheckDefault" />
+                                                        <label className="check_box-label" htmlFor="flexCheckDefault">
+                                                            isCompleted?
+                                                        </label>
+                                                    </div>
 
                                                     <div className="button-group mt-2">
                                                         <button onClick={() => saveTaskUpdate(task._id)} className="btn btn-success me-2">Save</button>
                                                         <button onClick={cancelEditing} className="btn btn-secondary">Cancel</button>
                                                     </div>
                                                 </div>
+                                                
                                             ) : (
                                                 <div>
                                                     <h5 style={{ color: "red" }}>{task.title}</h5>
@@ -339,10 +357,15 @@ const Dashboard = () => {
                                                     <p><strong>Deadline:</strong> {moment(task.deadline).format("DD/MM/YYYY, hh:mm A")}</p>
                                                     {/* <p><strong>Reminder Time:</strong> {formatDate(task.reminderTime)}</p> */}
                                                     <p><strong>Reminder Time:</strong> {moment(task.reminderTime).format("DD/MM/YYYY, hh:mm A")}</p>
+                                                    <p><span>{task.isCompleted ? "✔️ Completed" : "❌ Pending"}</span></p>
+                                                    
+                                                    
+
                                                     <div className="button-group">
                                                         <button onClick={() => startEditing(task)} className="btn btn-warning me-2">Edit</button>
                                                         <button onClick={() => deleteTask(task._id)} className="btn btn-danger">Delete</button>
                                                     </div>
+
                                                 </div>
                                             )}
                                         </div>
