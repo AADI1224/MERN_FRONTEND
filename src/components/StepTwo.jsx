@@ -6,16 +6,13 @@ const StepTwo = ({ formData, handleChange, nextStep, prevStep }) => {
 
     const validateForm = () => {
         let newErrors = {};
-
         if (!formData.username || formData.username.trim().length < 6) {
             newErrors.username = !formData.username ? "Username required" : "Username must be at least 6 characters long";
         }
-
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0; // ✅ Return true if no errors
     };
 
-    // const [msg, setMsg] = useState("");
     const handleNext = () => {
         if (validateForm()) {
             // Save data to localStorage before moving to the next step
@@ -34,8 +31,6 @@ const StepTwo = ({ formData, handleChange, nextStep, prevStep }) => {
                 const base64String = reader.result;
                 setBase64(base64String);
                 handleChange({ target: { name: "image", value: base64String } });  //✅ Save Base64 image in formData
-
-
             };
         }
     };

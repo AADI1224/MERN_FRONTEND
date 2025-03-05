@@ -134,8 +134,8 @@ const Dashboard = () => {
                 navigate("/login");
                 return;
             }
-            const response = await axios.get(`http://localhost:5500/tasks/gettasks?page=${page}&limit=${limit}`,
-                // const response = await axios.get(`https://mern-backend-acet.onrender.com/tasks/gettasks?page=${page}&limit=${limit}`,
+            // const response = await axios.get(`http://localhost:5500/tasks/gettasks?page=${page}&limit=${limit}`,
+                const response = await axios.get(`https://mern-backend-acet.onrender.com/tasks/gettasks?page=${page}&limit=${limit}`,
                 {
                     headers: { Authorization: `Bearer ${token}` }
                 });
@@ -166,8 +166,8 @@ const Dashboard = () => {
         }
         try {
             const response = await axios.post(
-                "http://localhost:5500/tasks/posttasks",
-                // "https://mern-backend-acet.onrender.com/tasks/posttasks",
+                // "http://localhost:5500/tasks/posttasks",
+                "https://mern-backend-acet.onrender.com/tasks/posttasks",
                 {
                     title: newTask.title.trim(),
                     description: newTask.description.trim(),
@@ -189,8 +189,8 @@ const Dashboard = () => {
 
     const deleteTask = async (taskId) => {
         try {
-            await axios.delete(`http://localhost:5500/tasks/deletetasks/${taskId}`, {
-                // await axios.delete(`https://mern-backend-acet.onrender.com/tasks/deletetasks/${taskId}`, {
+            // await axios.delete(`http://localhost:5500/tasks/deletetasks/${taskId}`, {
+                await axios.delete(`https://mern-backend-acet.onrender.com/tasks/deletetasks/${taskId}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setTasks(tasks.filter((task) => task._id !== taskId));
@@ -212,8 +212,8 @@ const Dashboard = () => {
     const saveTaskUpdate = async (taskId) => {
         try {
             const response = await axios.put(
-                `http://localhost:5500/tasks/puttasks/${taskId}`,
-                // `https://mern-backend-acet.onrender.com/tasks/puttasks/${taskId}`,
+                // `http://localhost:5500/tasks/puttasks/${taskId}`,
+                `https://mern-backend-acet.onrender.com/tasks/puttasks/${taskId}`,
                 {
                     title: editedTask.title.trim(),
                     description: editedTask.description.trim(),
@@ -225,7 +225,7 @@ const Dashboard = () => {
             );
             setTasks(tasks.map((task) => (task._id === taskId ? { ...task, ...response.data } : task)));
             setEditingTaskId(null);
-            setEditedTask({ title: "", description: "", deadline: "", reminderTime: "", isCompleted: Boolean(" ")});
+            setEditedTask({ title: "", description: "", deadline: "", reminderTime: "", isCompleted: Boolean(" ") });
             console.log("Updated task:", editedTask);
         } catch (error) {
             console.error("Error updating task:", error.response?.data || error);
@@ -251,7 +251,7 @@ const Dashboard = () => {
                                     src={logo}
                                     alt="logo"
                                     className="login_logo d-flex flex-row "
-                                    style={{ pointerEvents: 'auto' }} // Make sure it's clickable
+                                    style={{ pointerEvents: 'auto' }}
                                 />
                             </div>
 
@@ -344,22 +344,16 @@ const Dashboard = () => {
                                                         <button onClick={cancelEditing} className="btn btn-secondary">Cancel</button>
                                                     </div>
                                                 </div>
-                                                
+
                                             ) : (
                                                 <div>
                                                     <h5 style={{ color: "red" }}>{task.title}</h5>
                                                     <p>{task.description}</p>
-                                                    {/* <p><strong>Created:</strong> {formatDate(task.createdAt)}</p> */}
-                                                    <p><strong>Created:</strong> {moment(task.createdAt).format("DD/MM/YYYY, hh:mm A")}</p>
-                                                    {/* <p><strong>Updated:</strong> {formatDate(task.updatedAt)}</p> */}
+                                                    <p><strong>Created:</strong> {moment(task.createdAt).format("DD/MM/YYYY, hh:mm A")}</p>                                    
                                                     <p><strong>Updated:</strong> {moment(task.updatedAt).format("DD/MM/YYYY, hh:mm A")}</p>
-                                                    {/* <p><strong>Deadline:</strong> {formatDate(task.deadline)}</p> */}
                                                     <p><strong>Deadline:</strong> {moment(task.deadline).format("DD/MM/YYYY, hh:mm A")}</p>
-                                                    {/* <p><strong>Reminder Time:</strong> {formatDate(task.reminderTime)}</p> */}
                                                     <p><strong>Reminder Time:</strong> {moment(task.reminderTime).format("DD/MM/YYYY, hh:mm A")}</p>
                                                     <p><span>{task.isCompleted ? "✔️ Completed" : "❌ Pending"}</span></p>
-                                                    
-                                                    
 
                                                     <div className="button-group">
                                                         <button onClick={() => startEditing(task)} className="btn btn-warning me-2">Edit</button>
@@ -377,16 +371,13 @@ const Dashboard = () => {
                         </div>
                     )}
 
-
                     {/* Pagination Controls */}
                     <div className="pagination mt-4 justify-content-center align-items-center">
                         <button className="btn btn-info" disabled={page === 1} onClick={() => setPage(page - 1)} >Previous</button>
                         <span className="text-light align-align-items-center justify-content-center me-2 ms-2">{page} of {totalPages}</span>
-                        {/* <button className="btn btn-info " disabled={page === totalPages} onClick={() => setPage(page + 1)}>Next</button> */}
                         <button className="btn btn-info" disabled={tasks.length === 0 || page >= totalPages} onClick={() => setPage(page + 1)} >Next</button>
                     </div>
                 </div>
-
             </div>
         </>
     );

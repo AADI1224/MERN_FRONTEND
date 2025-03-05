@@ -28,7 +28,6 @@ const StepOne = ({ formData, handleChange, nextStep }) => {
         if (!formData.password || formData.password.length < 6) {
             newErrors.password = "Password must be at least 6 characters";
         }
-
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0; // Return true if no errors
     };
@@ -106,13 +105,11 @@ const StepOne = ({ formData, handleChange, nextStep }) => {
                 {/* Next Button */}
                 <div className="d-flex align-items-center justify-content-center flex-column">
                     {/* <p>{msg}</p> */}
-                    <button className="btn btn-primary mt-1" style={{ padding: "7px 10px" }} onClick={handleNext}>
-                        Next
-                    </button>
+                    <button className="btn btn-primary mt-1" style={{ padding: "7px 10px" }} onClick={handleNext}>Next</button>
                 </div>
                 <div className="mt-3 d-flex flex-row justify-content-between">
                     <a href="/" className="text-info d-flex flex-row align-items-center" style={{ textDecoration: "none" }}>
-                    <img src={home_logo} alt="Home" style={{ width: "30px", height: "30px" }} />
+                        <img src={home_logo} alt="Home" style={{ width: "30px", height: "30px" }} />
                     </a>
                     <a href="/Login" className="text-blue d-flex flex-row align-items-center" style={{ textDecoration: "none" }}>
                         <span className="ms-2" style={{ fontSize: "1rem" }}>Already have an account?</span>

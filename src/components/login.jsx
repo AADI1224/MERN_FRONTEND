@@ -20,8 +20,8 @@ const Login = () => {
 
         try {
             const response = await axios.post(
-                'http://localhost:5500/users/login',
-                // "https://mern-backend-acet.onrender.com/users/login",
+                // 'http://localhost:5500/users/login',
+                "https://mern-backend-acet.onrender.com/users/login",
                 { Identifier, Password },
                 { headers: { 'Content-Type': 'application/json' } }
             );
@@ -92,9 +92,9 @@ const Login = () => {
                     </div>
 
                     <div className="mt-3">
-                        <a href="/" className="text-warning d-flex flex-row align-items-center" style={{textDecoration:"none"}}>
+                        <a href="/" className="text-warning d-flex flex-row align-items-center" style={{ textDecoration: "none" }}>
                             <img src={home_logo} alt="Home" style={{ width: "30px", height: "30px" }} />
-                            <span className="ms-2" style={{fontSize:"1rem"}}>home</span>
+                            <span className="ms-2" style={{ fontSize: "1rem" }}>home</span>
                         </a>
                     </div>
 

@@ -27,7 +27,6 @@ const Navbar = () => {
         const handleScroll = () => {
             setScrollPosition(window.scrollY);
         };
-
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
@@ -45,7 +44,6 @@ const Navbar = () => {
                 handleLogout();
                 window.location.reload();
             }, 10000); // Wait for 10 seconds before logging out
-
             return () => clearTimeout(timeout); // Cleanup timeout if token changes
         }
     }, [token]); // Depend on `token` changes
@@ -69,11 +67,9 @@ const Navbar = () => {
                 setShowLogout(false);
             }
         };
-
         if (showLogout) {
             document.addEventListener("click", handleClickOutside);
         }
-
         return () => {
             document.removeEventListener("click", handleClickOutside);
         };
@@ -95,7 +91,6 @@ const Navbar = () => {
 
                 {/* Right Side: User Icon */}
                 <div ref={logoutRef} className={`user_icon d-flex flex-column align-items-center ${showLogout ? "show-logout" : ""}`}>
-                    {/* Profile Image (Only opens the modal now) */}
                     <img
                         src={userimage}
                         alt="User"
@@ -103,7 +98,6 @@ const Navbar = () => {
                         onClick={() => setIsImageModalOpen(true)} // Open Image Modal
                         style={{ cursor: "pointer" }}
                     />
-
                     <h1 className="username-text d-flex" onClick={handleLogoClick} style={{ cursor: "pointer" }}>
                         {firstname}
                     </h1>

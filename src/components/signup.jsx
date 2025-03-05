@@ -8,9 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../CSS/signup.css';
 
 const Signup = () => {
-    // const [step, setStep] = useState(1);
     const [step, setStep] = useState(() => {
-        // Retrieve the last saved step from localStorage or default to 1
         return Number(localStorage.getItem("currentStep")) || 1;
     });
 
@@ -32,7 +30,6 @@ const Signup = () => {
 
     // Function to handle input changes
     const handleChange = (e) => {
-
         const { name, value } = e.target;
         setFormData((prevData) => ({
             ...prevData,
@@ -62,7 +59,6 @@ const Signup = () => {
                 Image: formData.image,
             });
 
-
             alert('Signup successful!');
             console.log("final to feed", response.data);
 
@@ -81,11 +77,9 @@ const Signup = () => {
         <div className="signup-container">
             <div className="signup-card">
                 {error && <div className="alert alert-danger">{error}</div>}
-
                 {step === 1 && <StepOne formData={formData} handleChange={handleChange} nextStep={nextStep} />}
                 {step === 2 && <StepTwo formData={formData} handleChange={handleChange} nextStep={nextStep} prevStep={prevStep} />}
                 {step === 3 && <FinalStep formData={formData} prevStep={prevStep} handleSubmit={handleSubmit} />}
-
             </div>
         </div>
     );
