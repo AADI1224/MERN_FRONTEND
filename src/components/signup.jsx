@@ -54,7 +54,6 @@ const Signup = () => {
             console.log("filled data", formData);
             // const response = await axios.post('http://localhost:5500/users/postusers', {
             const response = await axios.post("https://mern-backend-acet.onrender.com/users/postusers", {
-            // const response = await axios.post(' https://7889-2401-4900-1c08-564a-a537-fb03-28ce-63ba.ngrok-free.app/users/postusers', {
                 Email: formData.email,
                 Firstname: formData.firstname,
                 Lastname: formData.lastname,

@@ -20,10 +20,6 @@ const Dashboard = () => {
     const token = localStorage.getItem("auth_token");
     const navigate = useNavigate();
 
-    const formatDate = (dateString) => {
-        return new Date(dateString).toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
-    };
-
     useEffect(() => {
         const canvas = document.getElementById("canvas-club");
         const ctx = canvas.getContext("2d");
@@ -130,7 +126,7 @@ const Dashboard = () => {
         };
     }, []);
 
-    // Fetch tasks from API
+    // Fetch tasks from API-free.app/tasks/gettasks?page=${page}&limit=${limit}`,
     const fetchTasks = async () => {
         setLoading(true);
         try {
@@ -138,9 +134,8 @@ const Dashboard = () => {
                 navigate("/login");
                 return;
             }
-            // const response = await axios.get(`http://localhost:5500/tasks/gettasks?page=${page}&limit=${limit}`,
-            const response = await axios.get(`https://mern-backend-acet.onrender.com/tasks/gettasks?page=${page}&limit=${limit}`,
-            // const response = await axios.get(` https://7889-2401-4900-1c08-564a-a537-fb03-28ce-63ba.ngrok-free.app/tasks/gettasks?page=${page}&limit=${limit}`,
+            const response = await axios.get(`http://localhost:5500/tasks/gettasks?page=${page}&limit=${limit}`,
+            // const response = await axios.get(`https://mern-backend-acet.onrender.com/tasks/gettasks?page=${page}&limit=${limit}`,
                 {
                     headers: { Authorization: `Bearer ${token}` }
                 });
@@ -148,7 +143,8 @@ const Dashboard = () => {
             setTotalPages(response.data.totalPages);
 
             console.log("Fetched tasks:", response.data.tasks);
-        } catch (error) {
+        }
+        catch (error) {
             console.error("Error fetching tasks:", error.response?.data || error);
         } finally {
             setLoading(false);
@@ -156,15 +152,20 @@ const Dashboard = () => {
     };
     useEffect(() => {
         fetchTasks();
-    }, [page, token, navigate]);
+        // }, [page, token, navigate]);
+    }, [page, !!token]);
 
     const addTask = async () => {
         if (!newTask.title.trim() || !newTask.description.trim() || !newTask.deadline || !newTask.reminderTime) return;
+
+        if (new Date(newTask.deadline) <= new Date()) {
+            alert("Deadline must be in the future.");
+            return;
+        }
         try {
             const response = await axios.post(
-                // "http://localhost:5500/tasks/posttasks",
-                "https://mern-backend-acet.onrender.com/tasks/posttasks",
-                // " https://7889-2401-4900-1c08-564a-a537-fb03-28ce-63ba.ngrok-free.app/tasks/posttasks",
+                "http://localhost:5500/tasks/posttasks",
+                // "https://mern-backend-acet.onrender.com/tasks/posttasks",
                 {
                     title: newTask.title.trim(),
                     description: newTask.description.trim(),
@@ -187,7 +188,6 @@ const Dashboard = () => {
         try {
             // await axios.delete(`http://localhost:5500/tasks/deletetasks/${taskId}`, {
             await axios.delete(`https://mern-backend-acet.onrender.com/tasks/deletetasks/${taskId}`, {
-            // await axios.delete(` https://7889-2401-4900-1c08-564a-a537-fb03-28ce-63ba.ngrok-free.app/tasks/deletetasks/${taskId}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setTasks(tasks.filter((task) => task._id !== taskId));
@@ -198,20 +198,19 @@ const Dashboard = () => {
 
     const startEditing = (task) => {
         setEditingTaskId(task._id);
-        setEditedTask({ title: task.title, description: task.description });
+        setEditedTask({ title: task.title, description: task.description, reminderTime: task.reminderTime, deadline: task.deadline });
     };
 
     const cancelEditing = () => {
         setEditingTaskId(null);
-        setEditedTask({ title: "", description: "" });
+        setEditedTask({ title: "", description: "", deadline: "", reminderTime: "" });
     };
 
     const saveTaskUpdate = async (taskId) => {
         try {
             const response = await axios.put(
-                // `http://localhost:5500/tasks/puttasks/${taskId}`,
-                `https://mern-backend-acet.onrender.com/tasks/puttasks/${taskId}`,
-                // ` https://7889-2401-4900-1c08-564a-a537-fb03-28ce-63ba.ngrok-free.app/tasks/puttasks/${taskId}`,
+                `http://localhost:5500/tasks/puttasks/${taskId}`,
+                // `https://mern-backend-acet.onrender.com/tasks/puttasks/${taskId}`,
                 {
                     title: editedTask.title.trim(),
                     description: editedTask.description.trim(),
@@ -223,6 +222,7 @@ const Dashboard = () => {
             setTasks(tasks.map((task) => (task._id === taskId ? { ...task, ...response.data } : task)));
             setEditingTaskId(null);
             setEditedTask({ title: "", description: "", deadline: "", reminderTime: "" });
+            console.log("Updated task:", editedTask);
         } catch (error) {
             console.error("Error updating task:", error.response?.data || error);
         }
@@ -309,6 +309,19 @@ const Dashboard = () => {
                                                         className="task-input-description mt-3"
                                                         placeholder="Task Description"
                                                     />
+
+                                                    <div className="scheduler">
+                                                        <div className="d-flex flex-row mb-2">
+                                                            <label className="d-flex align-items-center justify-content-center display-7">deadline</label>
+                                                            <input type="datetime-local" className="task-input-deadline ms-2" value={editedTask.deadline} onChange={(e) => setEditedTask({ ...editedTask, deadline: e.target.value })} />
+                                                        </div>
+                                                        <div className="d-flex flex-row">
+                                                            <label className="d-flex align-items-center justify-content-center">remind at</label>
+                                                            <input type="datetime-local" className="task-input-reminder ms-2" value={editedTask.reminderTime} onChange={(e) => setEditedTask({ ...editedTask, reminderTime: e.target.value })} />
+                                                        </div>
+                                                    </div>
+
+
                                                     <div className="button-group mt-2">
                                                         <button onClick={() => saveTaskUpdate(task._id)} className="btn btn-success me-2">Save</button>
                                                         <button onClick={cancelEditing} className="btn btn-secondary">Cancel</button>

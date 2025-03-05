@@ -17,7 +17,6 @@ const ForgotPassword = () => {
         try {
             // const res = await axios.post("http://localhost:5500/password_reset/send-reset-link", { email });
             const res = await axios.post("https://mern-backend-acet.onrender.com/password_reset/send-reset-link", { email });
-            // const res = await axios.post(" https://7889-2401-4900-1c08-564a-a537-fb03-28ce-63ba.ngrok-free.app/password_reset/send-reset-link", { email });
             setMessage(res.data.message);
         } catch (err) {
             setError(err.response?.data?.message || "Something went wrong.");

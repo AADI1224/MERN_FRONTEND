@@ -13,6 +13,7 @@ const Navbar = () => {
     const [userimage, setUserimage] = useState(icon);
     const logoutRef = useRef(null);
     const [isloggedout, setIsLoggedOut] = useState(false);
+    const token = localStorage.getItem("auth_token");
 
     useEffect(() => {
         const storedImage = localStorage.getItem("image");
@@ -38,7 +39,19 @@ const Navbar = () => {
     };
 
     useEffect(() => {
-         if (isloggedout) {
+        if (!token) {
+            const timeout = setTimeout(() => {
+                console.log("Token is missing, logging out...");
+                handleLogout();
+                window.location.reload();
+            }, 10000); // Wait for 10 seconds before logging out
+
+            return () => clearTimeout(timeout); // Cleanup timeout if token changes
+        }
+    }, [token]); // Depend on `token` changes
+
+    useEffect(() => {
+        if (isloggedout) {
             navigate("/login");
         }
     }, [isloggedout, navigate]);
@@ -68,12 +81,12 @@ const Navbar = () => {
 
     // Dynamic Navbar Style on Scroll
     const navbarStyle = {
-        backgroundColor: `rgba(255, 255, 255, ${0 + Math.min(scrollPosition / 500, 0.2)})`, 
+        backgroundColor: `rgba(255, 255, 255, ${0 + Math.min(scrollPosition / 500, 0.2)})`,
         backdropFilter: `blur(${5 + Math.min(scrollPosition / 500, 5)}px)`, // Smooth blur effect
         transition: "background-color 1s ease-out, backdrop-filter 1s ease-out",
         willChange: "background-color, backdrop-filter",
     };
-    
+
     return (
         <>
             <div className="navbar navbar-fixed d-flex" style={navbarStyle}>

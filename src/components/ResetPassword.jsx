@@ -24,7 +24,6 @@ const ResetPassword = () => {
         try {
             // const res = await axios.post('http://localhost:5500/password_reset/reset-password', {
             const res = await axios.post("https://mern-backend-acet.onrender.com/password_reset/reset-password", {
-            // const res = await axios.post(' https://7889-2401-4900-1c08-564a-a537-fb03-28ce-63ba.ngrok-free.app/password_reset/reset-password', {
                 token,
                 password: newPassword,
             });
