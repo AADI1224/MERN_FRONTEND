@@ -280,8 +280,8 @@ const Dashboard = () => {
                                 </div>
                             </div>
 
-                            <div className="check_box">
-                                <input className="check_box-input" type="checkbox" checked={newTask.isCompleted} onChange={(e) => setNewTask({ ...newTask, isCompleted: e.target.checked })} id="flexCheckDefault" />
+                            <div className="check_box d-flex flex-row">
+                                <input className="check_box-input me-2" type="checkbox" checked={newTask.isCompleted} onChange={(e) => setNewTask({ ...newTask, isCompleted: e.target.checked })} id="flexCheckDefault" />
                                 <label className="check_box-label" htmlFor="flexCheckDefault">
                                     isCompleted?
                                 </label>
